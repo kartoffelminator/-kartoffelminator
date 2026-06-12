@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Kartoffelminator™ - Amtliches Selbstprüfverfahren zur Feststellung des kartoffelkulturellen Integrationsgrades." />
+  <title>Kartoffelminator™ | Bundeskartoffelbehörde</title>
+
+  <style>
+    :root {
+      --bg1: #f8efd9;
+      --bg2: #e8d2a8;
+      --paper: #fffaf0;
+      --paper2: #fff3c4;
+      --text: #2d2418;
+      --muted: #6a5638;
+      --brown: #76542b;
+      --brownDark: #543719;
+      --gold: #d4aa48;
+      --line: #c99d50;
+      --red: #8b1e12;
+      --green: #2f6b3c;
+      --shadow: rgba(0,0,0,0.14);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255,255,255,0.75), transparent 30%),
+        radial-gradient(circle at 90% 10%, rgba(255,243,196,0.7), transparent 26%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px 14px 70px;
+    }
+
+    .hide { display: none !important; }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+      border: 4px double var(--brown);
+      border-radius: 26px;
+      padding: 28px 18px 24px;
+      background: rgba(255,250,240,0.88);
+      box-shadow: 0 8px 26px var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header:before {
+      content: "BUNDESKARTOFFELBEHÖRDE";
+      position: absolute;
+      top: 12px;
+      left: -62px;
+      transform: rotate(-22deg);
+      font-weight: 900;
+      color: rgba(118,84,43,0.10);
+      font-size: 2rem;
+      letter-spacing: 2px;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    header:after {
+      content: "BKG §63";
+      position: absolute;
+      right: 18px;
+      bottom: 16px;
+      font-weight: 900;
+      color: rgba(118,84,43,0.16);
+      font-size: 2.2rem;
+      transform: rotate(-6deg);
+      pointer-events: none;
+    }
+
+    .seal {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      border: 4px solid var(--brown);
+      margin: 0 auto 12px;
+      display: grid;
+      place-items: center;
+      font-size: 2.8rem;
+      background: radial-gradient(circle, #fff8df 0%, #fff3c4 60%, #e7c36a 100%);
+      box-shadow: inset 0 0 0 5px rgba(118,84,43,0.13), 0 3px 12px var(--shadow);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 7vw, 4.4rem);
+      letter-spacing: -1.5px;
+    }
+
+    h2 { margin-top: 0; font-size: 1.55rem; }
+    h3 { margin-bottom: 10px; }
+
+    .subtitle {
+      margin: 8px auto 0;
+      max-width: 760px;
+      font-style: italic;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.45;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 16px;
+    }
+
+    .badge {
+      display: inline-block;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: #fff8df;
+      font-weight: bold;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .card {
+      background: rgba(255,250,240,0.95);
+      border-radius: 20px;
+      padding: 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 5px 18px var(--shadow);
+      border: 1px solid rgba(118,84,43,0.18);
+    }
+
+    .intro p, .legal p {
+      line-height: 1.58;
+      margin: 11px 0;
+    }
+
+    .notice {
+      background: #fff3c4;
+      border-left: 6px solid var(--brown);
+      padding: 14px 15px;
+      border-radius: 12px;
+      line-height: 1.55;
+      margin: 16px 0;
+    }
+
+    .progress-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(248,239,217,0.94);
+      backdrop-filter: blur(7px);
+      border-bottom: 1px solid rgba(118,84,43,0.18);
+      padding: 12px 0;
+      margin-bottom: 18px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-weight: bold;
+      color: var(--muted);
+      margin-bottom: 7px;
+      font-size: .95rem;
+    }
+
+    .progress {
+      height: 15px;
+      background: #e5cf9a;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid rgba(118,84,43,0.25);
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--brown), var(--gold));
+      border-radius: 999px;
+      transition: width .25s ease;
+    }
+
+    .question-meta {
+      color: var(--muted);
+      font-size: .94rem;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .question-title {
+      font-weight: 900;
+      font-size: 1.22rem;
+      line-height: 1.35;
+      margin-bottom: 16px;
+    }
+
+    label.answer {
+      display: block;
+      padding: 13px 14px;
+      margin: 10px 0;
+      background: #f8efd9;
+      border-radius: 14px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform .08s ease, background .12s ease, border .12s ease;
+      line-height: 1.35;
+    }
+
+    label.answer:hover {
+      background: #edd9ad;
+      transform: translateY(-1px);
+    }
+
+    label.answer.selected {
+      border-color: var(--brown);
+      background: #fff3c4;
+    }
+
+    input[type="radio"] {
+      transform: scale(1.14);
+      margin-right: 8px;
+      accent-color: var(--brown);
+    }
+
+    .nav-buttons, .result-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      border-radius: 14px;
+      background: var(--brown);
+      color: white;
+      padding: 14px 18px;
+      font-size: 1.03rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.17);
+      transition: transform .08s ease, background .12s ease;
+    }
+
+    button:hover { background: var(--brownDark); transform: translateY(-1px); }
+    button.secondary { background: #b89b61; color: #2d2418; }
+    button.secondary:hover { background: #a8894e; }
+    button:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; transform: none; }
+
+    #questionArea { display: none; }
+
+    #result {
+      display: none;
+      margin-top: 28px;
+      padding: 26px;
+      border-radius: 22px;
+      background: rgba(255,248,223,0.98);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.2);
+      border: 4px double var(--brown);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #result:before {
+      content: "BESCHEID";
+      position: absolute;
+      top: 16px;
+      right: -28px;
+      transform: rotate(18deg);
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: rgba(118,84,43,0.09);
+      letter-spacing: 4px;
+      pointer-events: none;
+    }
+
+    .big-score {
+      font-size: clamp(3rem, 11vw, 6rem);
+      font-weight: 900;
+      text-align: center;
+      margin: 0;
+      letter-spacing: -2px;
+    }
+
+    .status {
+      font-size: clamp(1.45rem, 5vw, 2.35rem);
+      text-align: center;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .stamp {
+      margin: 16px auto 22px;
+      width: fit-content;
+      max-width: 100%;
+      transform: rotate(-4deg);
+      border: 5px solid;
+      border-radius: 12px;
+      padding: 10px 18px;
+      font-size: clamp(1.35rem, 5vw, 2.65rem);
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: .92;
+      text-align: center;
+    }
+
+    .pass { color: var(--green); border-color: var(--green); }
+    .fail { color: var(--red); border-color: var(--red); }
+
+    .warning {
+      color: var(--red);
+      font-weight: bold;
+      background: rgba(139,30,18,0.08);
+      padding: 12px;
+      border-radius: 12px;
+      border-left: 5px solid var(--red);
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .cat {
+      background: #fffaf0;
+      border: 1px solid rgba(118,84,43,0.24);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .cat-name {
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .mini-bar {
+      height: 10px;
+      background: #e6d2a8;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .mini-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--brown), var(--gold));
+      border-radius: 999px;
+    }
+
+    .small {
+      font-size: 0.94rem;
+      color: var(--muted);
+      margin-top: 16px;
+      font-style: italic;
+      line-height: 1.45;
+    }
+
+    .bescheid {
+      background: #fffaf0;
+      border-left: 6px solid var(--brown);
+      padding: 15px;
+      border-radius: 12px;
+      margin: 16px 0;
+      line-height: 1.55;
+    }
+
+    .id-card {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 14px;
+      align-items: center;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.65), transparent),
+        #fffaf0;
+      border: 2px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+      margin: 14px 0;
+    }
+
+    .photo {
+      width: 100%;
+      aspect-ratio: 1 / 1.15;
+      border: 2px dashed var(--line);
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-size: 2.2rem;
+      background: #fff3c4;
+    }
+
+    textarea.shareText {
+      width: 100%;
+      min-height: 96px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      padding: 12px;
+      background: #fffaf0;
+      color: var(--text);
+      font-family: Arial, sans-serif;
+      margin-top: 8px;
+      resize: vertical;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: .92rem;
+      margin-top: 24px;
+    }
+
+    @media (max-width: 560px) {
+      .id-card { grid-template-columns: 1fr; }
+      .photo { max-width: 120px; }
+      .nav-buttons button, .result-actions button { width: 100%; }
+      .progress-label { font-size: .86rem; }
+    }
+
+    @media print {
+      body { background: white; }
+      header, .intro, .legal, .progress-wrap, #questionArea, .result-actions, .footer-note { display: none !important; }
+      .container { max-width: none; padding: 0; }
+      #result {
+        display: block !important;
+        box-shadow: none;
+        border: 3px double #000;
+        border-radius: 0;
+      }
+      .category-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div class="seal">🥔</div>
+      <h1>Kartoffelminator™</h1>
+      <p class="subtitle">
+        Amtliches Selbstprüfverfahren zur Feststellung des kartoffelkulturellen Integrationsgrades nach BKG §63, gefühlte Fassung.
+      </p>
+      <div class="top-actions">
+        <span class="badge">Schwelle: 63 %</span>
+        <span class="badge">Geburtsprivilegien-Abzug aktiv</span>
+        <span class="badge">PDF-Bescheid möglich</span>
+      </div>
+    </header>
+
+    <section id="start" class="card intro">
+      <h2>Willkommen bei der Bundeskartoffelbehörde</h2>
+      <p>
+        Dieser Test prüft nicht, woher Sie kommen, sondern ob Sie im Alltag bereits ausreichend kartoffelkulturell eingebunden sind.
+        Geburt im Bundesgebiet ersetzt keinen Kompetenznachweis. Ja, das ist unfair. Also im Grunde ziemlich realistisch.
+      </p>
+      <p>
+        Bewertet werden Bürokratie, Vereinswesen, Grillfähigkeit, Gartenordnung, Automeinungen, Nachbarschaftskompetenz,
+        Brotbewusstsein, Regelkultur und Feierabendkompetenz.
+      </p>
+      <div class="notice">
+        Personen, die sich zu sicher sind, „Deutschland erklären“ zu können, können durch Punktabzug auffallen.
+        Auch gebürtige Deutsche können durchfallen. Die Behörde betrachtet das als pädagogisch wertvoll.
+      </div>
+      <button onclick="startQuiz()">Prüfverfahren eröffnen</button>
+    </section>
+
+    <section id="questionArea">
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span id="progressText">Frage 1 / 36</span>
+          <span id="progressPercent">0 % bearbeitet</span>
+        </div>
+        <div class="progress">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
+
+      <div class="card" id="questionCard"></div>
+
+      <div class="nav-buttons">
+        <button class="secondary" id="prevBtn" onclick="prevQuestion()">Zurück</button>
+        <button id="nextBtn" onclick="nextQuestion()">Weiter</button>
+      </div>
+    </section>
+
+    <section id="result"></section>
+
+    <section class="card legal">
+      <h2>Kleingedrucktes, weil sonst wäre es ja kein Land</h2>
+      <p>
+        Der Kartoffelminator™ ist Satire. Es werden keine Daten gespeichert, übertragen oder ausgewertet. Alles passiert direkt im Browser.
+        Die Bundeskartoffelbehörde existiert nicht. Vermutlich. Man weiß ja nie.
+      </p>
+    </section>
+
+    <p class="footer-note">© Bundeskartoffelbehörde, gefühlte Körperschaft des öffentlichen Unfugs</p>
+  </div>
+
+  <script>
+    const questions = [
+      { category: "Eingangskontrolle", text: "Wurden Sie in Deutschland geboren?", answers: [
+        { text: "Ja.", points: {}, penalty: 10 },
+        { text: "Nein.", points: { regel: 1, buero: 1 }, penalty: -5 },
+        { text: "Kompliziert, aber ich habe Formulare dazu.", points: { buero: 5, regel: 2 }, penalty: 0 }
+      ]},
+      { category: "Selbstüberschätzungskontrolle", text: "Haben Sie schon einmal jemandem erklärt, wie Deutschland funktioniert?", answers: [
+        { text: "Nein.", points: { regel: 1 }, penalty: 0 },
+        { text: "Einmal, und es war mir danach peinlich.", points: { regel: 1 }, penalty: 2 },
+        { text: "Mehrfach.", points: { regel: 1 }, penalty: 10 },
+        { text: "Regelmäßig unter Nachrichtenseiten.", points: {}, penalty: 25 }
+      ]},
+      { category: "Selbstüberschätzungskontrolle", text: "Der Satz „Das muss man hier eben so machen“ bedeutet für Sie:", answers: [
+        { text: "Nichts. Regeln brauchen Gründe.", points: { regel: 1 }, penalty: 0 },
+        { text: "Manchmal stimmt das schon.", points: { regel: 2 }, penalty: 2 },
+        { text: "Eine vollständige Argumentation.", points: { regel: 2 }, penalty: 8 }
+      ]},
+      { category: "Pünktlichkeit", text: "Ein Termin beginnt um 14:00 Uhr. Wann sind Sie da?", answers: [
+        { text: "14:07 Uhr. Leben passiert.", points: { regel: 0 } },
+        { text: "Punkt 14:00 Uhr.", points: { regel: 3 } },
+        { text: "13:47 Uhr. Man weiß ja nie.", points: { regel: 5, buero: 1 } }
+      ]},
+      { category: "Regelkultur", text: "Nachts um 3 Uhr. Niemand da. Fußgängerampel rot.", answers: [
+        { text: "Ich gehe.", points: { regel: 0 } },
+        { text: "Ich überlege kurz.", points: { regel: 2 } },
+        { text: "Ich warte. Regeln sind Regeln. Leider.", points: { regel: 6 } }
+      ]},
+      { category: "Lüftungswesen", text: "Wie stehen Sie zum Stoßlüften?", answers: [
+        { text: "Überbewerteter Aberglaube.", points: { regel: 0 } },
+        { text: "Ganz sinnvoll.", points: { regel: 2 } },
+        { text: "Fundament der Zivilisation.", points: { regel: 5, garten: 1 } }
+      ]},
+      { category: "Bürokratie", text: "Was passiert mit Bedienungsanleitungen?", answers: [
+        { text: "Weg damit.", points: { buero: 0 } },
+        { text: "In die Schublade.", points: { buero: 2 } },
+        { text: "Abheften. Nach Gerätegruppe.", points: { buero: 6 } }
+      ]},
+      { category: "Bürokratie", text: "Wie reagieren Sie auf ein neues Formular?", answers: [
+        { text: "Ich schließe den Browser und hoffe auf Verjährung.", points: { buero: 0 } },
+        { text: "Ich fluche und fülle es aus.", points: { buero: 3 } },
+        { text: "Ich prüfe zuerst, ob es eine Ausfüllhilfe gibt.", points: { buero: 6, regel: 1 } }
+      ]},
+      { category: "Bürokratie", text: "Wie viele Ordner besitzen Sie?", answers: [
+        { text: "Keine Ahnung.", points: { buero: 0 } },
+        { text: "Ein paar.", points: { buero: 3 } },
+        { text: "Thematisch sortiert oder insgesamt?", points: { buero: 7 } }
+      ]},
+      { category: "Versicherung", text: "Wie viele Versicherungen sind angemessen?", answers: [
+        { text: "Eine reicht doch.", points: { buero: 0 } },
+        { text: "Die üblichen.", points: { buero: 3 } },
+        { text: "So viele, dass selbst das Leben Angst bekommt.", points: { buero: 6 } }
+      ]},
+      { category: "Vereinswesen", text: "Warst du jemals Mitglied in einem Verein?", answers: [
+        { text: "Nein.", points: { verein: 0 } },
+        { text: "Ja.", points: { verein: 3 } },
+        { text: "Ja, und ich weiß, was eine Jahreshauptversammlung ist.", points: { verein: 6 } }
+      ]},
+      { category: "Vereinswesen", text: "Der Satz „Das müssen wir im Vorstand besprechen“ löst bei dir aus:", answers: [
+        { text: "Fluchtimpulse.", points: { verein: 0 } },
+        { text: "Leichte Müdigkeit.", points: { verein: 2 } },
+        { text: "Zustimmendes Nicken.", points: { verein: 6, regel: 1 } }
+      ]},
+      { category: "Vereinswesen", text: "Bei einer Jahreshauptversammlung wird über die Kassenprüfung gesprochen. Sie denken:", answers: [
+        { text: "Ich muss hier raus.", points: { verein: 0 } },
+        { text: "Muss wohl sein.", points: { verein: 3 } },
+        { text: "Wer wurde zum zweiten Kassenprüfer gewählt?", points: { verein: 7, buero: 2 } }
+      ]},
+      { category: "Vereinswesen", text: "Wie klingt „Satzungsänderung“ für Sie?", answers: [
+        { text: "Wie ein Fluchtgrund.", points: { verein: 0 } },
+        { text: "Trocken, aber notwendig.", points: { verein: 3 } },
+        { text: "Da muss man sauber formulieren.", points: { verein: 6, buero: 2 } }
+      ]},
+      { category: "Grillwesen", text: "Beim Grillen sagt jemand: „Das Fleisch braucht noch.“", answers: [
+        { text: "Mir egal, ich esse Brot.", points: { grill: 0, brot: 1 } },
+        { text: "Klingt vernünftig.", points: { grill: 3 } },
+        { text: "Das war ich.", points: { grill: 6 } }
+      ]},
+      { category: "Grillwesen", text: "Grillkohle oder Gas?", answers: [
+        { text: "Keine Meinung.", points: { grill: 0 } },
+        { text: "Kommt drauf an.", points: { grill: 2 } },
+        { text: "Dazu habe ich eine feste Position.", points: { grill: 6, regel: 1 } }
+      ]},
+      { category: "Grillwesen", text: "Wie stehen Sie zu Grillzangen?", answers: [
+        { text: "Irgendeine Zange reicht.", points: { grill: 0 } },
+        { text: "Eine richtige Grillzange ist schon besser.", points: { grill: 3 } },
+        { text: "Ohne eigene Grillzange ist das kein seriöser Vorgang.", points: { grill: 6 } }
+      ]},
+      { category: "Grillwesen", text: "Jemand legt Gemüse auf den Grill.", answers: [
+        { text: "Gut.", points: { grill: 1 } },
+        { text: "Kann man machen.", points: { grill: 3 } },
+        { text: "Aber bitte auf einer separaten Zone.", points: { grill: 6, regel: 1 } }
+      ]},
+      { category: "Gartenwesen", text: "Was empfinden Sie bei Unkraut?", answers: [
+        { text: "Nichts.", points: { garten: 0 } },
+        { text: "Leichte Irritation.", points: { garten: 3 } },
+        { text: "Handlungsbedarf.", points: { garten: 6 } }
+      ]},
+      { category: "Gartenwesen", text: "Wissen Sie, wann man Hecken schneiden darf?", answers: [
+        { text: "Nein.", points: { garten: 0 } },
+        { text: "Ungefähr.", points: { garten: 3 } },
+        { text: "Ja, und ich beurteile andere danach.", points: { garten: 6, regel: 2 } }
+      ]},
+      { category: "Gartenwesen", text: "Ein Nachbar mäht am Sonntag den Rasen.", answers: [
+        { text: "Dann mäht er halt.", points: { garten: 0, nachbar: 0 } },
+        { text: "Nicht schön.", points: { garten: 2, nachbar: 2 } },
+        { text: "Ich kenne die Rechtslage nicht auswendig, aber bald.", points: { garten: 4, nachbar: 3, regel: 2 } }
+      ]},
+      { category: "Gartenwesen", text: "Wie reagieren Sie auf einen sehr ordentlichen Vorgarten?", answers: [
+        { text: "Gar nicht.", points: { garten: 0 } },
+        { text: "Sieht gepflegt aus.", points: { garten: 3 } },
+        { text: "Ich erkenne Disziplin.", points: { garten: 6, regel: 1 } }
+      ]},
+      { category: "Autowesen", text: "Winterreifen sind:", answers: [
+        { text: "Optional.", points: { auto: 0 } },
+        { text: "Sinnvoll.", points: { auto: 3 } },
+        { text: "Ein Thema von nationaler Bedeutung.", points: { auto: 6, regel: 1 } }
+      ]},
+      { category: "Autowesen", text: "Wie reagieren Sie auf falsch parkende Autos?", answers: [
+        { text: "Nicht mein Problem.", points: { auto: 0 } },
+        { text: "Ärgerlich.", points: { auto: 3 } },
+        { text: "Ich fotografiere nicht, aber ich verstehe Leute, die es tun.", points: { auto: 6, regel: 2 } }
+      ]},
+      { category: "Autowesen", text: "Sie hören „Reißverschlussverfahren“.", answers: [
+        { text: "Kleidung?", points: { auto: 0 } },
+        { text: "Kenne ich.", points: { auto: 3 } },
+        { text: "Wird in diesem Land viel zu selten korrekt angewendet.", points: { auto: 6, regel: 2 } }
+      ]},
+      { category: "Autowesen", text: "Ihr Auto macht ein neues Geräusch.", answers: [
+        { text: "Musik lauter.", points: { auto: 0 } },
+        { text: "Ich beobachte das.", points: { auto: 3 } },
+        { text: "Ich beschreibe es präzise beim Werkstatttermin.", points: { auto: 6, buero: 1 } }
+      ]},
+      { category: "Nachbarschaft", text: "Wie viele Nachbarn kennen Sie namentlich?", answers: [
+        { text: "Keine.", points: { nachbar: 0 } },
+        { text: "Einige.", points: { nachbar: 3 } },
+        { text: "Alle. Plus Haustiere.", points: { nachbar: 6 } }
+      ]},
+      { category: "Nachbarschaft", text: "Wie viele Pakete haben Sie schon für Nachbarn angenommen?", answers: [
+        { text: "Keine.", points: { nachbar: 0 } },
+        { text: "Einige.", points: { nachbar: 3 } },
+        { text: "Ich bin faktisch eine Außenstelle von DHL.", points: { nachbar: 6 } }
+      ]},
+      { category: "Nachbarschaft", text: "Jemand stellt den Biomüll falsch raus.", answers: [
+        { text: "Nicht mein Zirkus.", points: { nachbar: 0, regel: 0 } },
+        { text: "Ich sehe es und leide still.", points: { nachbar: 3, regel: 2 } },
+        { text: "Ich habe innerlich bereits einen Aushang formuliert.", points: { nachbar: 6, regel: 4, buero: 1 } }
+      ]},
+      { category: "Nachbarschaft", text: "Im Hausflur steht länger als 24 Stunden ein fremder Gegenstand.", answers: [
+        { text: "Nicht gesehen.", points: { nachbar: 0 } },
+        { text: "Gesehen, registriert.", points: { nachbar: 3 } },
+        { text: "Gesehen, registriert, gedanklich protokolliert.", points: { nachbar: 6, buero: 2 } }
+      ]},
+      { category: "Brotwesen", text: "Was ist Brot?", answers: [
+        { text: "Lebensmittel.", points: { brot: 1 } },
+        { text: "Kulturgut.", points: { brot: 4 } },
+        { text: "Identität.", points: { brot: 6 } }
+      ]},
+      { category: "Brotwesen", text: "Im Urlaub vermissen Sie:", answers: [
+        { text: "Nichts.", points: { brot: 0 } },
+        { text: "Gutes Brot.", points: { brot: 4 } },
+        { text: "Gutes Brot und funktionierende Mülltrennung.", points: { brot: 5, regel: 3 } }
+      ]},
+      { category: "Brotwesen", text: "Was ist ein vernünftiges Abendessen?", answers: [
+        { text: "Was gerade da ist.", points: { brot: 0 } },
+        { text: "Irgendwas mit Brot.", points: { brot: 3 } },
+        { text: "Abendbrot. Der Name ist doch wohl eindeutig.", points: { brot: 6, regel: 1 } }
+      ]},
+      { category: "Feierabend", text: "Sagen Sie beim Aufstehen manchmal „So“?", answers: [
+        { text: "Nein.", points: { feierabend: 0 } },
+        { text: "Manchmal.", points: { feierabend: 3 } },
+        { text: "Natürlich. Wie sonst beendet man eine Existenzphase?", points: { feierabend: 6 } }
+      ]},
+      { category: "Feierabend", text: "Feierabend ist für Sie:", answers: [
+        { text: "Ein ungefährer Zeitraum.", points: { feierabend: 0 } },
+        { text: "Wichtig.", points: { feierabend: 3 } },
+        { text: "Ein Grundrecht mit Getränkebezug.", points: { feierabend: 6 } }
+      ]},
+      { category: "Abschlussprüfung", text: "Wie reagieren Sie auf diesen Test?", answers: [
+        { text: "Lustig.", points: { feierabend: 1 } },
+        { text: "Man könnte die Auswertung noch genauer machen.", points: { buero: 4, regel: 3 } },
+        { text: "Ich hätte Verbesserungsvorschläge zur Skalierung.", points: { buero: 5, verein: 2, regel: 3 }, penalty: 1 }
+      ]}
+    ];
+
+    const categoryNames = {
+      buero: "Bürokratiekartoffel",
+      verein: "Vereinskartoffel",
+      grill: "Grillkartoffel",
+      garten: "Gartenzwergkartoffel",
+      auto: "Autokartoffel",
+      regel: "Regelkartoffel",
+      nachbar: "Nachbarschaftskartoffel",
+      brot: "Brotkartoffel",
+      feierabend: "Feierabendkartoffel"
+    };
+
+    const categoryDescriptions = {
+      buero: "Formulare, Ordner, Nachweise und das leise Knistern amtlicher Panik.",
+      verein: "Vorstände, Satzungen, Kassenprüfung und demokratisch legitimierte Müdigkeit.",
+      grill: "Zangen, Zonen, Garzeiten und Meinungen zu Kohle.",
+      garten: "Hecken, Unkraut, Rasenruhe und Vorgartenbeurteilung.",
+      auto: "Winterreifen, Reißverschlussverfahren und falsch parkende Mitbürger.",
+      regel: "Ampeln, Termine, Ordnung und das Gefühl, dass es doch Regeln geben muss.",
+      nachbar: "Pakete, Hausflurbeobachtung, Biomüll und stille Aushangfantasien.",
+      brot: "Abendbrot, Urlaubskrise und Teigwaren als Identitätsanker.",
+      feierabend: "Das heilige „So“, Getränke und rituelle Existenzphasenbeendigung."
+    };
+
+    const randomNotices = [
+      "Ihre Akte wurde an die Abteilung Brotwesen weitergeleitet.",
+      "Die Behörde prüft derzeit, ob Ihre Grillzange ausreichend lang ist.",
+      "Ein Sachbearbeiter hat zustimmend genickt. Das ist selten.",
+      "Ihre Angaben wurden mit dem imaginären Müllkalender abgeglichen.",
+      "Die Unterabteilung Stoßlüften meldet leichten Optimismus.",
+      "Bitte halten Sie für Rückfragen einen Leitz-Ordner bereit.",
+      "Der Vorgang wurde ausgedruckt, abgeheftet und innerlich bewertet."
+    ];
+
+    const categoryMax = {};
+    Object.keys(categoryNames).forEach(k => categoryMax[k] = 0);
+
+    questions.forEach(q => {
+      Object.keys(categoryNames).forEach(cat => {
+        let best = 0;
+        q.answers.forEach(a => {
+          const val = (a.points && a.points[cat]) ? a.points[cat] : 0;
+          if (val > best) best = val;
+        });
+        categoryMax[cat] += best;
+      });
+    });
+
+    let currentQuestion = 0;
+    const answersGiven = new Array(questions.length).fill(null);
+
+    function startQuiz() {
+      document.getElementById("start").classList.add("hide");
+      document.getElementById("result").style.display = "none";
+      document.getElementById("questionArea").style.display = "block";
+      currentQuestion = 0;
+      renderQuestion();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderQuestion() {
+      const q = questions[currentQuestion];
+      const card = document.getElementById("questionCard");
+      let html = `
+        <div class="question-meta">Abteilung: ${q.category}</div>
+        <div class="question-title">${currentQuestion + 1}. ${q.text}</div>
+      `;
+
+      q.answers.forEach((answer, idx) => {
+        const checked = answersGiven[currentQuestion] === idx ? "checked" : "";
+        const selected = answersGiven[currentQuestion] === idx ? "selected" : "";
+        html += `
+          <label class="answer ${selected}" onclick="selectAnswer(${idx})">
+            <input type="radio" name="answer" ${checked} aria-label="${answer.text}">
+            ${answer.text}
+          </label>
+        `;
+      });
+
+      card.innerHTML = html;
+      document.getElementById("prevBtn").disabled = currentQuestion === 0;
+      document.getElementById("nextBtn").textContent = currentQuestion === questions.length - 1 ? "Bescheid erstellen" : "Weiter";
+      updateProgress();
+    }
+
+    function selectAnswer(idx) {
+      answersGiven[currentQuestion] = idx;
+      renderQuestion();
+    }
+
+    function nextQuestion() {
+      if (answersGiven[currentQuestion] === null) {
+        alert("Bitte eine Antwort auswählen. Die Bundeskartoffelbehörde duldet keine halbgaren Angaben.");
+        return;
+      }
+
+      if (currentQuestion === questions.length - 1) {
+        calculateResult();
+        return;
+      }
+
+      currentQuestion++;
+      renderQuestion();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+
+    function updateProgress() {
+      const answered = answersGiven.filter(v => v !== null).length;
+      const percent = Math.round((answered / questions.length) * 100);
+      document.getElementById("progressText").textContent = `Frage ${currentQuestion + 1} / ${questions.length}`;
+      document.getElementById("progressPercent").textContent = `${percent} % bearbeitet`;
+      document.getElementById("progressBar").style.width = `${percent}%`;
+    }
+
+    function calculateResult() {
+      const scores = {};
+      Object.keys(categoryNames).forEach(k => scores[k] = 0);
+
+      let totalPoints = 0;
+      let penalty = 0;
+      let maxPoints = 0;
+
+      questions.forEach((q, qi) => {
+        const a = q.answers[answersGiven[qi]];
+
+        Object.keys(a.points || {}).forEach(category => {
+          scores[category] += a.points[category];
+          totalPoints += a.points[category];
+        });
+
+        penalty += a.penalty || 0;
+
+        let highest = 0;
+        q.answers.forEach(answer => {
+          let sum = 0;
+          Object.values(answer.points || {}).forEach(value => sum += value);
+          if (sum > highest) highest = sum;
+        });
+        maxPoints += highest;
+      });
+
+      let finalScore = totalPoints - penalty;
+      if (finalScore < 0) finalScore = 0;
+
+      let percent = Math.round((finalScore / maxPoints) * 100);
+      if (percent > 100) percent = 100;
+
+      const sortedCategories = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+      const topCategory = sortedCategories[0][0];
+      const resultText = getResultText(percent, categoryNames[topCategory]);
+
+      document.getElementById("questionArea").style.display = "none";
+      showResult(percent, resultText, sortedCategories, penalty, totalPoints, finalScore);
+    }
+
+    function getResultText(percent, topCategory) {
+      if (percent < 25) {
+        return {
+          status: "Globalisierungsresistent",
+          stamp: "Nicht bestanden",
+          passed: false,
+          text: "Sie zeigen bislang kaum kartoffelkulturelle Auffälligkeiten. Bitte prüfen Sie, ob Sie überhaupt schon einmal eine Hausordnung gelesen haben.",
+          decree: "Ein sofortiger Aufbaukurs in Stoßlüften, Müllkalenderkunde und passiv-aggressiver Zettelkommunikation wird empfohlen.",
+          top: topCategory
+        };
+      }
+      if (percent < 50) {
+        return {
+          status: "Leicht angekartoffelt",
+          stamp: "Nachschulung",
+          passed: false,
+          text: "Erste Symptome sind erkennbar. Eine Haftpflichtversicherung könnte bereits vorhanden sein, aber der Müllkalender sitzt noch nicht.",
+          decree: "Die Behörde erkennt Bemühungen an, sieht jedoch erheblichen Fortbildungsbedarf im Bereich Brot, Ordnung und Vereinswesen.",
+          top: topCategory
+        };
+      }
+      if (percent < 63) {
+        return {
+          status: "Kartoffel in Vorbereitung",
+          stamp: "Knapp gescheitert",
+          passed: false,
+          text: "Die Integration zeigt Fortschritte, reicht aber noch nicht. Bitte vertiefen Sie Ihre Kenntnisse in Stoßlüften, Brotwesen und Nachbarschaftskommunikation.",
+          decree: "Sie dürfen Deutschland bereits kritisieren, aber noch nicht ungefragt erklären.",
+          top: topCategory
+        };
+      }
+      if (percent < 85) {
+        return {
+          status: "Integration erfolgreich",
+          stamp: "Integriert",
+          passed: true,
+          text: "Sie dürfen nun ungefragt erklären, wie Mülltrennung funktioniert. Die Bundeskartoffelbehörde gratuliert widerwillig.",
+          decree: "Der kartoffelkulturelle Mindeststandard gemäß § 63 gefühlte Ordnung wurde erfüllt.",
+          top: topCategory
+        };
+      }
+      if (percent < 96) {
+        return {
+          status: "Überintegriert",
+          stamp: "Inventarisiert",
+          passed: true,
+          text: "Sie kennen Öffnungszeiten auswendig, haben Meinungen zu Hecken und vermutlich schon einmal ein Formular freiwillig heruntergeladen.",
+          decree: "Sie sind berechtigt, bei Grillfesten regionale Kartoffelsalatnormen zu vertreten.",
+          top: topCategory
+        };
+      }
+      return {
+        status: "Kartoffel Ultra",
+        stamp: "Hausordnung",
+        passed: true,
+        text: "Sie sind nicht integriert. Sie sind Bestandteil der Hausordnung.",
+        decree: "Die Behörde bittet Sie, künftig selbst Prüfungen abzunehmen und Aushänge zu laminieren.",
+        top: topCategory
+      };
+    }
+
+    function showResult(percent, resultText, sortedCategories, penalty, totalPoints, finalScore) {
+      const result = document.getElementById("result");
+      const stampClass = resultText.passed ? "pass" : "fail";
+      const notice = randomNotices[Math.floor(Math.random() * randomNotices.length)];
+      const bescheidNo = "KRT-" + new Date().getFullYear() + "-" + Math.floor(100000 + Math.random() * 900000);
+
+      let categoryHtml = "";
+      sortedCategories.forEach(([category, value]) => {
+        const max = categoryMax[category] || 1;
+        const catPercent = Math.round((value / max) * 100);
+        categoryHtml += `
+          <div class="cat">
+            <div class="cat-name">${categoryNames[category]}: ${catPercent} %</div>
+            <div class="mini-bar"><div class="mini-fill" style="width:${catPercent}%"></div></div>
+            <div class="small">${categoryDescriptions[category]}</div>
+          </div>
+        `;
+      });
+
+      let penaltyText = "";
+      if (penalty > 0) {
+        penaltyText = `
+          <p class="warning">
+            Kartoffelvorschuss-Rückforderung: -${penalty} Punkte wegen Geburtsprivilegien, Integrationsbelehrung oder amtlich festgestellter Überheblichkeit.
+          </p>`;
+      } else if (penalty < 0) {
+        penaltyText = `
+          <p class="bescheid">
+            Ausgleichsbonus: +${Math.abs(penalty)} Punkte. Gelebte Alltagskompetenz schlägt Geburtsromantik. Die Akte nimmt dies überrascht zur Kenntnis.
+          </p>`;
+      }
+
+      const share = `Mein Kartoffelgrad: ${percent} %. Status: ${resultText.status}. Spezialfähigkeit: ${resultText.top}. Ergebnis: ${resultText.stamp}. Kartoffelminator™ sagt: ${resultText.text}`;
+
+      result.innerHTML = `
+        <p class="big-score">${percent} %</p>
+        <div class="status">${resultText.status}</div>
+        <div class="stamp ${stampClass}">${resultText.stamp}</div>
+
+        <p>${resultText.text}</p>
+
+        <div class="bescheid">
+          <strong>Amtlicher Bescheid:</strong><br>
+          ${resultText.decree}<br><br>
+          <strong>Aktennotiz:</strong> ${notice}
+        </div>
+
+        <p><strong>Spezialfähigkeit:</strong> ${resultText.top}</p>
+
+        ${penaltyText}
+
+        <div class="bescheid">
+          <strong>Berechnung:</strong><br>
+          Rohpunkte: ${totalPoints}<br>
+          Punktestand nach Abzug/Zuschlag: ${finalScore}<br>
+          Integrationsschwelle: 63 %
+        </div>
+
+        <h3>Kartoffel-Personalausweis</h3>
+        <div class="id-card">
+          <div class="photo">🥔</div>
+          <div>
+            <strong>Bundeskartoffelbehörde</strong><br>
+            <strong>Name:</strong> Testperson<br>
+            <strong>Status:</strong> ${resultText.status}<br>
+            <strong>Spezialfähigkeit:</strong> ${resultText.top}<br>
+            <strong>Bescheidnummer:</strong> ${bescheidNo}<br>
+            <strong>Gültigkeit:</strong> bis zur nächsten Diskussion über Mülltrennung
+          </div>
+        </div>
+
+        <h3>Einzelwertung</h3>
+        <div class="category-grid">${categoryHtml}</div>
+
+        <h3>Text zum Kopieren</h3>
+        <textarea class="shareText" readonly>${share}</textarea>
+
+        <div class="nav-buttons result-actions">
+          <button onclick="copyShareText()">Ergebnis kopieren</button>
+          <button onclick="window.print()">Bescheid drucken / als PDF speichern</button>
+          <button class="secondary" onclick="restart()">Neue Prüfung</button>
+        </div>
+
+        <p class="small">
+          Dieses Ergebnis wurde maschinell erzeugt und ist ohne Laminierschutz nicht rechtsverbindlich.
+          Gegen diesen Kartoffelbescheid kann innerhalb von 14 Tagen formlos, aber bitte schriftlich, Widerspruch eingelegt werden.
+          Die Bundeskartoffelbehörde haftet nicht für Familienstreit, Vereinsbeitritte oder spontane Anschaffung eines Etikettiergeräts.
+        </p>
+      `;
+
+      result.style.display = "block";
+      result.scrollIntoView({ behavior: "smooth" });
+    }
+
+    function copyShareText() {
+      const text = document.querySelector(".shareText").value;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Ergebnis kopiert. Die Akte wurde ordnungsgemäß weitergereicht.");
+      }).catch(() => {
+        alert("Kopieren hat nicht geklappt. Bitte manuell markieren. So viel zur Digitalisierung.");
+      });
+    }
+
+    function restart() {
+      answersGiven.fill(null);
+      document.getElementById("result").style.display = "none";
+      document.getElementById("start").classList.remove("hide");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  </script>
+</body>
+</html>
